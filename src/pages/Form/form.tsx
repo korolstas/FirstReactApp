@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Card from './card';
+import Validation from './Validation';
 import './form.css';
+import { isVisible } from '@testing-library/user-event/dist/utils';
 
 const Form = () => {
   interface Person {
@@ -17,11 +19,21 @@ const Form = () => {
   const [date, setDate] = useState('');
   const [country, setCountry] = useState('');
   const [image, setImage] = useState('');
-  const [info, setInfo] = useState(false);
+  const [info, setInfo] = useState(true);
+  const [animation, setAnimation] = useState(false);
 
   const addPeople = () => {
-    // дописать здесь чтобы была проверка на создание - валидация
-    if (create) {
+    if (
+      create &&
+      nameDirty &&
+      dateDirty &&
+      countryDirty &&
+      imageDirty &&
+      !nameError &&
+      !dateError &&
+      !countryError &&
+      !imageError
+    ) {
       const newPerson: Person = {
         name: name,
         date: date,
@@ -34,124 +46,221 @@ const Form = () => {
       setCountry('');
       setDate('');
       setImage('');
+      setNameDirty(false);
+      setDateDirty(false);
+      setCountryDirty(false);
+      setImageDirty(false);
+      setNameError('This field is required');
+      setImageError('This field is required');
+      setCountryError('This field is required');
+      setDateError('This field is required');
+      setAnimation(true);
+      animationHandle();
+    } else if (create) {
+      setNameDirty(true);
+      setDateDirty(true);
+      setCountryDirty(true);
+      setImageDirty(true);
     }
+    setCreate(false);
+    setIsChecked(false);
   };
 
-  const radioHandle = (e: React.MouseEvent<HTMLInputElement>) => {
-    if (create === true) {
-      setCreate(false);
-    } else if (create === false) {
+  const [nameError, setNameError] = useState('This field is required');
+  const [dateError, setDateError] = useState('This field is required');
+  const [countryError, setCountryError] = useState('This field is required');
+  const [imageError, setImageError] = useState('This field is required');
+  const [nameDirty, setNameDirty] = useState(false);
+  const [dateDirty, setDateDirty] = useState(false);
+  const [countryDirty, setCountryDirty] = useState(false);
+  const [imageDirty, setImageDirty] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const radioHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isChecked) {
       setCreate(true);
+    } else {
+      setCreate(false);
     }
   };
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const blurHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.name) {
+      case 'name':
+        setNameDirty(true);
+        break;
+      case 'date':
+        setDateDirty(true);
+        break;
+      case 'image':
+        setImageDirty(true);
+        break;
+    }
+  };
+  const blurHandleCountry = (e: React.FocusEvent<HTMLSelectElement, Element>) => {
+    switch (e.target.name) {
+      case 'country':
+        setCountryDirty(true);
+        break;
+    }
+  };
+  const nameHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setName(newValue);
+    const re = /[A-Za-z]{3}/;
+    if (String(newValue) === '') {
+      setNameError('This field is required');
+    } else if (!re.test(String(newValue).toLowerCase())) {
+      setNameError('Should be more than 3 symbols');
+    } else {
+      setNameError('');
+    }
+  };
+  const dateHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setDate(newValue);
+    if (newValue === '') {
+      setDateError('This field is required');
+    } else if (new Date(newValue) > new Date()) {
+      setDateError('Selected date should not be in the future');
+    } else {
+      setDateError('');
+    }
+  };
+  const countryHandle = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = e.target.value;
+    setCountry(newValue);
+    if (newValue === '') {
+      setCountryError('This field is required');
+    } else {
+      setCountryError('');
+    }
+  };
+  const imageHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      console.log(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
+      setImageError('');
+    } else {
+      setImageError('This field is required');
     }
+  };
+  const animationHandle = () => {
+    setAnimation(true);
+    setTimeout(() => {
+      setAnimation(false);
+    }, 3000); // 3000 миллисекунд = 3 секунды
   };
 
   return (
-    <div className="container">
-      <div className="form">
-        {/*поле ИМЯ - (не готово!!!!!!!!!!!!!!!!!!!!!)*/}
-        <label>Name:</label>
-        <input
-          name="name"
-          type="text"
-          className="form-name"
-          placeholder=""
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <div className="form-empty"></div>
-        {/*поле дата - (Готово)*/}
-        <label>Date of birth:</label>
-        <input
-          name="date"
-          type="date"
-          className="form-date"
-          placeholder=""
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          max={new Date().toISOString().split('T')[0]}
-        />
-        <div className="form-empty"></div>
-        {/*поле страны - (не готово!!!!!!!!!!!!!!!!!!!)*/}
-        <label>Country:</label>
-        <select
-          name="country"
-          className="form-select"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        >
-          <option value="">Please select country</option>
-          <option value="Belarus">Belarus</option>
-          <option value="Lithuania">Lithuania</option>
-          <option value="Latvia">Latvia</option>
-          <option value="Estonia">Estonia</option>
-          <option value="Poland">Poland</option>
-          <option value="Slovakia">Slovakia</option>
-          <option value="Germany">Germany</option>
-          <option value="The Netherlands">The Netherlands</option>
-          <option value="Belgium">Belgium</option>
-          <option value="France">France</option>
-        </select>
-        <div className="form-empty"></div>
-        {/*поле фото - (не готово!!!!!!!!!!!!!!!!!!)*/}
-        <label>Select profile image:</label>
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          className="form-img"
-          onChange={handleImageChange}
-        ></input>
-        <div className="form-empty"></div>
-        {/*поле информации - (Готово)*/}
-        <div className="form-checkbox">
-          <label>I want to receive information about novelties</label>
-          <label className="check-switch">
-            <input type="checkbox" className="checkButton" />
-            <span
-              className="slider"
-              data-label-on="YES"
-              data-label-off="NO"
-              onClick={info ? () => setInfo(false) : () => setInfo(true)}
-            ></span>
+    <div>
+      {animation && (
+        <div className="modal-window">
+          <label className="window">Card successfully added</label>
+        </div>
+      )}
+      <div className="container">
+        <div className="form">
+          <label>Name:</label>
+          <input
+            name="name"
+            type="text"
+            className="form-name"
+            placeholder=""
+            onBlur={(e) => blurHandle(e)}
+            value={name}
+            onChange={(e) => nameHandle(e)}
+          />
+          <Validation changeError={nameError} changeDirty={nameDirty} />
+          <label>Date of birth:</label>
+          <input
+            name="date"
+            type="date"
+            className="form-date"
+            placeholder=""
+            onBlur={(e) => blurHandle(e)}
+            value={date}
+            onChange={(e) => dateHandle(e)}
+            max={new Date().toISOString().split('T')[0]}
+          />
+          <Validation changeError={dateError} changeDirty={dateDirty} />
+          <label>Country:</label>
+          <select
+            name="country"
+            className="form-select"
+            value={country}
+            onBlur={(e) => blurHandleCountry(e)}
+            onChange={(e) => countryHandle(e)}
+          >
+            <option value="">Please select country</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Lithuania">Lithuania</option>
+            <option value="Latvia">Latvia</option>
+            <option value="Estonia">Estonia</option>
+            <option value="Poland">Poland</option>
+            <option value="Slovakia">Slovakia</option>
+            <option value="Germany">Germany</option>
+            <option value="The Netherlands">The Netherlands</option>
+            <option value="Belgium">Belgium</option>
+            <option value="France">France</option>
+          </select>
+          <Validation changeError={countryError} changeDirty={countryDirty} />
+          <label>Select profile image:</label>
+          <input
+            name="image"
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            className="form-img"
+            onBlur={(e) => blurHandle(e)}
+            onChange={(e) => imageHandle(e)}
+          ></input>
+          <Validation changeError={imageError} changeDirty={imageDirty} />
+          <div className="form-checkbox">
+            <label>I want to receive information about novelties</label>
+            <label className="check-switch">
+              <input type="checkbox" className="checkButton" />
+              <span
+                className="slider"
+                data-label-on="YES"
+                data-label-off="NO"
+                onClick={!info ? () => setInfo(true) : () => setInfo(false)}
+              ></span>
+            </label>
+          </div>
+          <div className="form-empty"></div>
+          <label>
+            <input
+              type="checkbox"
+              onChange={(e) => radioHandle(e)}
+              checked={isChecked}
+              onClick={!isChecked ? () => setIsChecked(true) : () => setIsChecked(false)}
+            />
+            agree with processing of my personal data
           </label>
+          <div className="form-empty"></div>
+          <div className="form-empty"></div>
+          <button className={`sub-btn ${create ? 'animaited' : ''}`} onClick={addPeople}>
+            Submit
+          </button>
         </div>
-        <div className="form-empty"></div>
-        {/*поле соглашения - (Готово)*/}
-        <div>
-          <input type="checkbox" className="form-radio" onClick={(e) => radioHandle(e)}></input>
-          <label>agree with processing of my personal data</label>
-        </div>
-        <div className="form-empty"></div>
-        <div className="form-empty"></div>
-        {/*поле кнопка - (готово)*/}
-        <button className={`sub-btn ${create ? 'animaited' : ''}`} onClick={addPeople}>
-          Submit
-        </button>
-      </div>
-      {/*поле модельки - (готово)*/}
-      <div className="modalsS">
-        <div className="modali">
-          {people.map((person, index) => (
-            <div key={index}>
-              <Card
-                name={person.name}
-                date={person.date}
-                country={person.country}
-                imgg={person.imgg}
-                info={person.info}
-              />
-            </div>
-          ))}
+        <div className="modalsS">
+          <div className="modali">
+            {people.map((person, index) => (
+              <div key={index}>
+                <Card
+                  name={person.name}
+                  date={person.date}
+                  country={person.country}
+                  imgg={person.imgg}
+                  info={person.info}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ const Card = (Person: {
       </div>
       <div className="card_novetiels">
         <label>Info about novelties</label>
-        <span className=""></span>
+        <label className="">{!Person.info ? 'Yes' : 'No'}</label>
       </div>
     </div>
   );

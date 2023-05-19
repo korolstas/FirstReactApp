@@ -16,6 +16,7 @@ label{
 }
 .form-empty{
 	height: 22px;
+	color: red;
 }
 .form-name{
 	font-size: 18px;
@@ -23,7 +24,6 @@ label{
   margin: 10px 0px;
   background: rgba(0, 217, 255, 0.3);
 	border: 2px solid rgb(2, 118, 139);
-	color: rgb(2, 118, 139);
   border-radius: 3px;
 }
 .form-date{
@@ -162,4 +162,23 @@ input:checked + .slider::before {
 	flex-wrap: wrap;
 	margin-bottom: 30px;
 	margin-top: 30px;
+}
+.modal-window {
+	position: fixed;
+	left: 0px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100%;
+	width: 100%;
+}
+.window {
+	background-color: green;
+	height: 6%;
+	width: 20%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	border-radius: 5px;
+	color: aliceblue;
 }
