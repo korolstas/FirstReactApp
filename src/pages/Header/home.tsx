@@ -81,9 +81,9 @@ export default class Header extends Component {
           <Modal setActive={() => this.openModal(this.state.person)} Person={this.state.person} />
         </div>
         <div className="modals">
-          {this.state.filteredPersons.map((article) => {
-            return this.modalBox(article);
-          })}
+          {this.state.filteredPersons.map((article, index) => (
+            <div key={index}>{this.modalBox(article)}</div>
+          ))}
         </div>
       </div>
     );
