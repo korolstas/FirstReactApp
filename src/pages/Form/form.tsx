@@ -77,7 +77,7 @@ const Form = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const radioHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isChecked) {
+    if (!isChecked && e.target) {
       setCreate(true);
     } else {
       setCreate(false);
