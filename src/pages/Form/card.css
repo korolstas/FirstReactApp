@@ -1,6 +1,7 @@
 .cardD {
 	width: 320px;
 	height: 150px;
+	display: flex;
 	flex-direction: column;
 	padding: 10px;
 	border: 1px solid rgb(2, 70, 82);
@@ -15,9 +16,9 @@
   max-width: 200px;
   max-height: 300px;
 }
-/* .wefFEWw{
+.wefFEWw{
 	display: flex;
-} */
+}
 .card-imgG{
 	width: 100px;
   height: 100px;
@@ -25,6 +26,7 @@
   margin-right: 20px;
 }
 .card-infoO{
+	display: flex;
   flex-direction: column;
   -webkit-box-pack: start;
   justify-content: start;
@@ -39,6 +41,7 @@
   text-align: left;
 }
 .card_novetiels{
+display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;

@@ -17,6 +17,7 @@
 }
 .modals{
   margin: 20px auto 0px;
+  display: flex;
   flex-flow: row wrap;
   width: 95vw;
   justify-content: space-between;
@@ -25,6 +26,7 @@
 	text-align: center;
   width: 280px;
   height: 330px;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 10px;
