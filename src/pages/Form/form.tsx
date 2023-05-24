@@ -76,13 +76,13 @@ const Form = () => {
   const [imageDirty, setImageDirty] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  const radioHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isChecked && e.target) {
-      setCreate(true);
-    } else {
-      setCreate(false);
-    }
-  };
+  // const radioHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!isChecked && e.target) {
+  //     setCreate(true);
+  //   } else {
+  //     setCreate(false);
+  //   }
+  // };
   const blurHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case 'name':
@@ -238,7 +238,7 @@ const Form = () => {
           <label>
             <input
               type="checkbox"
-              onChange={(e) => radioHandle(e)}
+              onChange={!isChecked ? () => setCreate(true) : () => setCreate(false)}
               checked={isChecked}
               onClick={!isChecked ? () => setIsChecked(true) : () => setIsChecked(false)}
             />
