@@ -28,8 +28,7 @@
 .card-infoO{
 	display: flex;
   flex-direction: column;
-  -webkit-box-pack: start;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .card-infoO h4 {
 	text-transform: uppercase;
