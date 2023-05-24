@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Card from './card';
 import Validation from './Validation';
 import './form.css';
-import { isVisible } from '@testing-library/user-event/dist/utils';
+// import { isVisible } from '@testing-library/user-event/dist/utils';
 
 const Form = () => {
   interface Person {
@@ -136,12 +136,15 @@ const Form = () => {
     }
   };
   const imageHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files && event.target.files[0];
     if (file) {
       console.log(file);
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage(e.target?.result as string);
+        const result = e.target ? e.target.result : null;
+        if (result) {
+          setImage(result as string);
+        }
       };
       reader.readAsDataURL(file);
       setImageError('');
