@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import Modal from './Modal/Modal';
-import { Persons } from './Modal/persons';
-import './style.css';
+import { PERSONS_DATA } from './Modal/constants';
+import './home.css';
+
+type TPerson = {
+  name: string;
+  gender: string;
+  status: string;
+  location: string;
+  img: string;
+  species: string;
+};
 
 export default class Header extends Component {
   state = {
-    visibility: false,
+    isVisibility: false,
     value: '',
-    filteredPersons: Persons,
+    filteredPersons: PERSONS_DATA,
     person: {
       name: 'none',
       gender: 'none',
@@ -17,16 +26,9 @@ export default class Header extends Component {
       img: 'none',
     },
   };
-  openModal = (Person: {
-    name: string;
-    gender: string;
-    status: string;
-    location: string;
-    img: string;
-    species: string;
-  }) => {
+  openModal = (Person: TPerson) => {
     this.setState({
-      visibility: !this.state.visibility,
+      isVisibility: !this.state.isVisibility,
       person: {
         name: Person.name,
         gender: Person.gender,
@@ -37,14 +39,7 @@ export default class Header extends Component {
       },
     });
   };
-  modalBox = (Person: {
-    name: string;
-    gender: string;
-    status: string;
-    location: string;
-    img: string;
-    species: string;
-  }) => (
+  modalBox = (Person: TPerson) => (
     <div onClick={() => this.openModal(Person)} className="card">
       <h3>{Person.name}</h3>
       <div className="personImg">
@@ -58,7 +53,7 @@ export default class Header extends Component {
   handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       this.setState({
-        filteredPersons: Persons.filter((Person) =>
+        filteredPersons: PERSONS_DATA.filter((Person) =>
           Person.name.toLowerCase().includes(this.state.value.toLowerCase())
         ),
       });
@@ -77,12 +72,15 @@ export default class Header extends Component {
             onChange={(element) => this.setValue(element.target.value)}
           />
         </div>
-        <div className={`open ${this.state.visibility ? 'animaited' : ''}`}>
-          <Modal setActive={() => this.openModal(this.state.person)} Person={this.state.person} />
+        <div className={`open ${this.state.isVisibility ? 'animaited' : ''}`}>
+          <Modal
+            setActive={() => this.openModal(this.state.person)}
+            PERSONS_DATA={this.state.person}
+          />
         </div>
         <div className="modals">
-          {this.state.filteredPersons.map((article, index) => (
-            <div key={index}>{this.modalBox(article)}</div>
+          {this.state.filteredPersons.map((article) => (
+            <div key={article.name}>{this.modalBox(article)}</div>
           ))}
         </div>
       </div>

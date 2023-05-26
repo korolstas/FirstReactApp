@@ -1,4 +1,4 @@
-export const Persons = [
+export const PERSONS_DATA = [
   {
     name: 'Rick Sanchez',
     gender: 'Male',

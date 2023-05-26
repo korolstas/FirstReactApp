@@ -1,13 +1,15 @@
 import React from 'react';
 import './card.css';
 
-const Card = (Person: {
+type TPerson = {
   name: string;
   date: string;
   country: string;
   imgg: string;
   info: boolean;
-}) => {
+};
+
+const Card = (Person: TPerson) => {
   return (
     <div className="cardD">
       <div className="wefFEWw">
@@ -31,4 +33,5 @@ const Card = (Person: {
     </div>
   );
 };
+
 export default Card;

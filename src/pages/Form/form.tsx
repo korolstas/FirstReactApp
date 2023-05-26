@@ -1,105 +1,85 @@
 import React, { useState } from 'react';
-import Card from './card';
+import Card from './Сard';
 import Validation from './Validation';
 import './form.css';
-// import { isVisible } from '@testing-library/user-event/dist/utils';
+import Person from './interfaceForm';
 
 const Form = () => {
-  interface Person {
-    name: string;
-    date: string;
-    country: string;
-    imgg: string;
-    info: boolean;
-  }
-
   const [people, setPeople] = useState<Person[]>([]);
   const [create, setCreate] = useState(false);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [country, setCountry] = useState('');
   const [image, setImage] = useState('');
-  const [info, setInfo] = useState(true);
-  const [animation, setAnimation] = useState(false);
-
-  const addPeople = () => {
-    if (
-      create &&
-      nameDirty &&
-      dateDirty &&
-      countryDirty &&
-      imageDirty &&
-      !nameError &&
-      !dateError &&
-      !countryError &&
-      !imageError
-    ) {
-      const newPerson: Person = {
-        name: name,
-        date: date,
-        country: country,
-        imgg: image,
-        info: info,
-      };
-      setPeople([...people, newPerson]);
-      setName('');
-      setCountry('');
-      setDate('');
-      setImage('');
-      setNameDirty(false);
-      setDateDirty(false);
-      setCountryDirty(false);
-      setImageDirty(false);
-      setNameError('This field is required');
-      setImageError('This field is required');
-      setCountryError('This field is required');
-      setDateError('This field is required');
-      setAnimation(true);
-      animationHandle();
-    } else if (create) {
-      setNameDirty(true);
-      setDateDirty(true);
-      setCountryDirty(true);
-      setImageDirty(true);
-    }
-    setCreate(false);
-    setIsChecked(false);
-  };
+  const [isEqual, setIsEqual] = useState(true);
+  const [isAnimation, setIsAnimation] = useState(false);
 
   const [nameError, setNameError] = useState('This field is required');
   const [dateError, setDateError] = useState('This field is required');
   const [countryError, setCountryError] = useState('This field is required');
   const [imageError, setImageError] = useState('This field is required');
-  const [nameDirty, setNameDirty] = useState(false);
-  const [dateDirty, setDateDirty] = useState(false);
-  const [countryDirty, setCountryDirty] = useState(false);
-  const [imageDirty, setImageDirty] = useState(false);
+  const [isNameDirty, setIsNameDirty] = useState(false);
+  const [isDateDirty, setIsDateDirty] = useState(false);
+  const [isCountryDirty, setIsCountryDirty] = useState(false);
+  const [isImageDirty, setIsImageDirty] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  // const radioHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!isChecked && e.target) {
-  //     setCreate(true);
-  //   } else {
-  //     setCreate(false);
-  //   }
-  // };
+  const addPeople = () => {
+    const isNoError = !nameError && !dateError && !countryError && !imageError;
+    const isDirty = isNameDirty && isDateDirty && isCountryDirty && isImageDirty;
+    const resetFrom = () => {
+      setName('');
+      setCountry('');
+      setDate('');
+      setImage('');
+      setIsNameDirty(false);
+      setIsDateDirty(false);
+      setIsCountryDirty(false);
+      setIsImageDirty(false);
+      setNameError('This field is required');
+      setImageError('This field is required');
+      setCountryError('This field is required');
+      setDateError('This field is required');
+    };
+
+    if (create && isDirty && isNoError) {
+      const newPerson: Person = {
+        name: name,
+        date: date,
+        country: country,
+        imgg: image,
+        info: isEqual,
+      };
+      setPeople([...people, newPerson]);
+      resetFrom();
+      setIsAnimation(true);
+      animationHandle();
+    } else if (create) {
+      setIsNameDirty(true);
+      setIsDateDirty(true);
+      setIsCountryDirty(true);
+      setIsImageDirty(true);
+    }
+    setCreate(false);
+    setIsChecked(false);
+  };
   const blurHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case 'name':
-        setNameDirty(true);
+        setIsNameDirty(true);
         break;
       case 'date':
-        setDateDirty(true);
+        setIsDateDirty(true);
         break;
       case 'image':
-        setImageDirty(true);
+        setIsImageDirty(true);
         break;
     }
   };
   const blurHandleCountry = (e: React.FocusEvent<HTMLSelectElement, Element>) => {
     switch (e.target.name) {
       case 'country':
-        setCountryDirty(true);
+        setIsCountryDirty(true);
         break;
     }
   };
@@ -153,15 +133,15 @@ const Form = () => {
     }
   };
   const animationHandle = () => {
-    setAnimation(true);
+    setIsAnimation(true);
     setTimeout(() => {
-      setAnimation(false);
+      setIsAnimation(false);
     }, 3000); // 3000 миллисекунд = 3 секунды
   };
 
   return (
     <div>
-      {animation && (
+      {isAnimation && (
         <div className="modal-window">
           <label className="window">Card successfully added</label>
         </div>
@@ -178,7 +158,7 @@ const Form = () => {
             value={name}
             onChange={(e) => nameHandle(e)}
           />
-          <Validation changeError={nameError} changeDirty={nameDirty} />
+          <Validation changeError={nameError} changeDirty={isNameDirty} />
           <label>Date of birth:</label>
           <input
             name="date"
@@ -190,7 +170,7 @@ const Form = () => {
             onChange={(e) => dateHandle(e)}
             max={new Date().toISOString().split('T')[0]}
           />
-          <Validation changeError={dateError} changeDirty={dateDirty} />
+          <Validation changeError={dateError} changeDirty={isDateDirty} />
           <label>Country:</label>
           <select
             name="country"
@@ -211,7 +191,7 @@ const Form = () => {
             <option value="Belgium">Belgium</option>
             <option value="France">France</option>
           </select>
-          <Validation changeError={countryError} changeDirty={countryDirty} />
+          <Validation changeError={countryError} changeDirty={isCountryDirty} />
           <label>Select profile image:</label>
           <input
             name="image"
@@ -221,7 +201,7 @@ const Form = () => {
             onBlur={(e) => blurHandle(e)}
             onChange={(e) => imageHandle(e)}
           ></input>
-          <Validation changeError={imageError} changeDirty={imageDirty} />
+          <Validation changeError={imageError} changeDirty={isImageDirty} />
           <div className="form-checkbox">
             <label>I want to receive information about novelties</label>
             <label className="check-switch">
@@ -230,7 +210,7 @@ const Form = () => {
                 className="slider"
                 data-label-on="YES"
                 data-label-off="NO"
-                onClick={!info ? () => setInfo(true) : () => setInfo(false)}
+                onClick={!isEqual ? () => setIsEqual(true) : () => setIsEqual(false)}
               ></span>
             </label>
           </div>
@@ -238,9 +218,9 @@ const Form = () => {
           <label>
             <input
               type="checkbox"
-              onChange={!isChecked ? () => setCreate(true) : () => setCreate(false)}
+              onChange={(event) => setCreate(event.target.checked)}
               checked={isChecked}
-              onClick={!isChecked ? () => setIsChecked(true) : () => setIsChecked(false)}
+              onClick={() => setIsChecked(!isChecked ? true : false)}
             />
             agree with processing of my personal data
           </label>
@@ -252,8 +232,8 @@ const Form = () => {
         </div>
         <div className="modalsS">
           <div className="modali">
-            {people.map((person, index) => (
-              <div key={index}>
+            {people.map((person) => (
+              <div key={person.name}>
                 <Card
                   name={person.name}
                   date={person.date}
