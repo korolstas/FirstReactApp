@@ -9,26 +9,26 @@ type TPerson = {
   info: boolean;
 };
 
-const Card = (Person: TPerson) => {
+const Card = (person: TPerson) => {
   return (
     <div className="cardD">
       <div className="wefFEWw">
-        <img className="card-imgG" src={Person.imgg} alt="No loading your photo" />
+        <img className="card-imgG" src={person.imgg} alt="No loading your photo" />
         <div className="card-infoO">
           <h4>
-            <b>{Person.name}</b>
+            <b>{person.name}</b>
           </h4>
           <p>
-            <b>Birth:</b> {Person.date}
+            <b>Birth:</b> {person.date}
           </p>
           <p>
-            <b>Country:</b> {Person.country}
+            <b>Country:</b> {person.country}
           </p>
         </div>
       </div>
       <div className="card_novetiels">
         <label>Info about novelties</label>
-        <label className="">{!Person.info ? 'Yes' : 'No'}</label>
+        <label className="">{!person.info ? 'Yes' : 'No'}</label>
       </div>
     </div>
   );

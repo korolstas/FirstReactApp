@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal/Modal';
 import { PERSONS_DATA } from './Modal/constants';
 import './home.css';
@@ -12,78 +12,70 @@ type TPerson = {
   species: string;
 };
 
-export default class Header extends Component {
-  state = {
-    isVisibility: false,
-    value: '',
-    filteredPersons: PERSONS_DATA,
-    person: {
-      name: 'none',
-      gender: 'none',
-      species: 'none',
-      status: 'none',
-      location: 'none',
-      img: 'none',
-    },
-  };
-  openModal = (Person: TPerson) => {
-    this.setState({
-      isVisibility: !this.state.isVisibility,
-      person: {
-        name: Person.name,
-        gender: Person.gender,
-        species: Person.species,
-        status: Person.status,
-        location: Person.location,
-        img: Person.img,
-      },
+const Home = () => {
+  const [filteredPersons, setFilteredPersons] = useState(PERSONS_DATA);
+  const [isVisibility, setIsVisibility] = useState(false);
+  const [searchInfo, setSearchInfo] = useState('');
+  const [person, setPerson] = useState<TPerson>({
+    name: 'none',
+    gender: 'none',
+    species: 'none',
+    status: 'none',
+    location: 'none',
+    img: 'none',
+  });
+
+  const openModal = (personInfo: TPerson) => {
+    setIsVisibility(!isVisibility);
+    setPerson({
+      name: personInfo.name,
+      gender: personInfo.gender,
+      species: personInfo.species,
+      status: personInfo.status,
+      location: personInfo.location,
+      img: personInfo.img,
     });
   };
-  modalBox = (Person: TPerson) => (
-    <div onClick={() => this.openModal(Person)} className="card">
-      <h3>{Person.name}</h3>
+  const modalBox = (personInfo: TPerson) => (
+    <div onClick={() => openModal(personInfo)} className="card">
+      <h3>{personInfo.name}</h3>
       <div className="personImg">
-        <img className="img" src={Person.img} alt="" />
+        <img className="img" src={personInfo.img} alt="" />
       </div>
     </div>
   );
-  setValue = (e: string) => {
-    this.setState({ value: e });
-  };
-  handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      this.setState({
-        filteredPersons: PERSONS_DATA.filter((Person) =>
-          Person.name.toLowerCase().includes(this.state.value.toLowerCase())
-        ),
-      });
+      setFilteredPersons(
+        PERSONS_DATA.filter((personInfo) =>
+          personInfo.name.toLowerCase().includes(searchInfo.toLowerCase())
+        )
+      );
     }
   };
 
-  render() {
-    return (
-      <div className="container">
-        <div className="search-box">
-          <input
-            onKeyDown={this.handleKeyDown}
-            type="text"
-            placeholder="Search character ..."
-            className="search___input"
-            onChange={(element) => this.setValue(element.target.value)}
-          />
-        </div>
-        <div className={`open ${this.state.isVisibility ? 'animaited' : ''}`}>
-          <Modal
-            setActive={() => this.openModal(this.state.person)}
-            PERSONS_DATA={this.state.person}
-          />
-        </div>
-        <div className="modals">
-          {this.state.filteredPersons.map((article) => (
-            <div key={article.name}>{this.modalBox(article)}</div>
-          ))}
-        </div>
+  return (
+    <div className="container">
+      <div className="search-box">
+        <input
+          onKeyDown={(e) => handleKeyDown(e)}
+          type="text"
+          placeholder="Search character ..."
+          className="search___input"
+          value={searchInfo}
+          onChange={(e) => setSearchInfo(e.target.value)}
+        />
       </div>
-    );
-  }
-}
+      <div className={`open ${isVisibility ? 'animaited' : ''}`}>
+        <Modal setActive={() => openModal(person)} hero={person} />
+      </div>
+      <div className="modals">
+        {filteredPersons.map((hero) => (
+          <div key={hero.name}>{modalBox(hero)}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Home;

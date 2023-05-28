@@ -24,6 +24,53 @@ const Form = () => {
   const [isImageDirty, setIsImageDirty] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
+  const selectItems = [
+    {
+      value: '',
+      label: 'Please select country',
+    },
+    {
+      value: 'Belarus',
+      label: 'Belarus',
+    },
+    {
+      value: 'Lithuania',
+      label: 'Lithuania',
+    },
+    {
+      value: 'Latvia',
+      label: 'Latvia',
+    },
+    {
+      value: 'Estonia',
+      label: 'Estonia',
+    },
+    {
+      value: 'Poland',
+      label: 'Poland',
+    },
+    {
+      value: 'Slovakia',
+      label: 'Slovakia',
+    },
+    {
+      value: 'Germany',
+      label: 'Germany',
+    },
+    {
+      value: 'The Netherlands',
+      label: 'The Netherlands',
+    },
+    {
+      value: 'Belgium',
+      label: 'Belgium',
+    },
+    {
+      value: 'France',
+      label: 'France',
+    },
+  ];
+
   const addPeople = () => {
     const isNoError = !nameError && !dateError && !countryError && !imageError;
     const isDirty = isNameDirty && isDateDirty && isCountryDirty && isImageDirty;
@@ -179,17 +226,11 @@ const Form = () => {
             onBlur={(e) => blurHandleCountry(e)}
             onChange={(e) => countryHandle(e)}
           >
-            <option value="">Please select country</option>
-            <option value="Belarus">Belarus</option>
-            <option value="Lithuania">Lithuania</option>
-            <option value="Latvia">Latvia</option>
-            <option value="Estonia">Estonia</option>
-            <option value="Poland">Poland</option>
-            <option value="Slovakia">Slovakia</option>
-            <option value="Germany">Germany</option>
-            <option value="The Netherlands">The Netherlands</option>
-            <option value="Belgium">Belgium</option>
-            <option value="France">France</option>
+            {selectItems.map((selectItem) => (
+              <option key={selectItem.value} value={selectItem.value}>
+                {selectItem.label}
+              </option>
+            ))}
           </select>
           <Validation changeError={countryError} changeDirty={isCountryDirty} />
           <label>Select profile image:</label>
@@ -233,7 +274,7 @@ const Form = () => {
         <div className="modalsS">
           <div className="modali">
             {people.map((person) => (
-              <div key={person.name}>
+              <div key={person.name && person.date}>
                 <Card
                   name={person.name}
                   date={person.date}

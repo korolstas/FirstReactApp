@@ -1,6 +1,6 @@
 interface Props {
   setActive: () => void;
-  PERSONS_DATA: {
+  hero: {
     name: string;
     gender: string;
     status: string;
