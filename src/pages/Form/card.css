@@ -1,47 +1,47 @@
 .cardD {
-	width: 320px;
-	height: 150px;
-	display: flex;
-	flex-direction: column;
-	padding: 10px;
-	border: 1px solid rgb(2, 70, 82);
-	border-radius: 10px;
-	margin-bottom: 30px;
+  width: 320px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid rgb(2, 70, 82);
+  border-radius: 10px;
+  margin-bottom: 30px;
 }
-.personImgG{
-	max-height: 300px;
+.personImgG {
+  max-height: 300px;
   margin: auto 0px;
 }
-.img{
+.img {
   max-width: 200px;
   max-height: 300px;
 }
-.wefFEWw{
-	display: flex;
+.wefFEWw {
+  display: flex;
 }
-.card-imgG{
-	width: 100px;
+.card-imgG {
+  width: 100px;
   height: 100px;
   object-fit: cover;
   margin-right: 20px;
 }
-.card-infoO{
-	display: flex;
+.card-infoO {
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 .card-infoO h4 {
-	text-transform: uppercase;
+  text-transform: uppercase;
   margin: 6px 0px;
   text-align: left;
 }
-.card-infoO p{
-	margin: 6px 0px;
+.card-infoO p {
+  margin: 6px 0px;
   text-align: left;
 }
-.card_novetiels{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
+.card_novetiels {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

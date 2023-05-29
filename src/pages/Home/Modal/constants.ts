@@ -1,5 +1,6 @@
 export const PERSONS_DATA = [
   {
+    id: 0,
     name: 'Rick Sanchez',
     gender: 'Male',
     species: 'Human',
@@ -8,6 +9,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
   },
   {
+    id: 1,
     name: 'Morty Smith',
     gender: 'Male',
     species: 'Human',
@@ -16,6 +18,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
   },
   {
+    id: 2,
     name: 'Jerry Smith',
     gender: 'Male',
     species: 'Human',
@@ -24,6 +27,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/5.jpeg',
   },
   {
+    id: 3,
     name: 'Summer Smith',
     gender: 'Female',
     species: 'Human',
@@ -32,6 +36,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/3.jpeg',
   },
   {
+    id: 4,
     name: 'Beth Smith',
     gender: 'Female',
     species: 'Human',
@@ -40,6 +45,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/4.jpeg',
   },
   {
+    id: 5,
     name: 'Abradolf Lincler',
     gender: 'Male',
     species: 'Human',
@@ -48,6 +54,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/7.jpeg',
   },
   {
+    id: 6,
     name: 'Adjudicator Rick',
     gender: 'Male',
     species: 'Human',
@@ -56,6 +63,7 @@ export const PERSONS_DATA = [
     img: 'https://rickandmortyapi.com/api/character/avatar/8.jpeg',
   },
   {
+    id: 7,
     name: 'Alan Rails',
     gender: 'Female',
     species: 'Human',

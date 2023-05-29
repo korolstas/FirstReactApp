@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Validation = (info: { changeError: string; changeDirty: boolean }) => {
+type TValidation = {
+  changeError: string;
+  changeDirty: boolean;
+};
+
+const Validation = (info: TValidation) => {
   return (
     <div className="form-empty">{info.changeError && info.changeDirty ? info.changeError : ''}</div>
   );

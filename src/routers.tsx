@@ -1,8 +1,8 @@
 import React from 'react';
-import Home from './pages/Home/home';
-import Form from './pages/Form/form';
-import About from './pages/About/about';
-import Error from './pages/Error 404/error404';
+import Home from './pages/Home/Home';
+import Form from './pages/Form/Form';
+import About from './pages/About/About';
+import Error from './pages/Error404/Error404';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 const Routers = () => {

@@ -26,46 +26,57 @@ const Form = () => {
 
   const selectItems = [
     {
+      id: 0,
       value: '',
       label: 'Please select country',
     },
     {
+      id: 1,
       value: 'Belarus',
       label: 'Belarus',
     },
     {
+      id: 2,
       value: 'Lithuania',
       label: 'Lithuania',
     },
     {
+      id: 3,
       value: 'Latvia',
       label: 'Latvia',
     },
     {
+      id: 4,
       value: 'Estonia',
       label: 'Estonia',
     },
     {
+      id: 5,
       value: 'Poland',
       label: 'Poland',
     },
     {
+      id: 6,
       value: 'Slovakia',
       label: 'Slovakia',
     },
     {
+      id: 7,
       value: 'Germany',
       label: 'Germany',
     },
     {
+      id: 8,
       value: 'The Netherlands',
       label: 'The Netherlands',
     },
     {
+      id: 9,
       value: 'Belgium',
       label: 'Belgium',
     },
     {
+      id: 10,
       value: 'France',
       label: 'France',
     },
@@ -226,9 +237,9 @@ const Form = () => {
             onBlur={(e) => blurHandleCountry(e)}
             onChange={(e) => countryHandle(e)}
           >
-            {selectItems.map((selectItem) => (
-              <option key={selectItem.value} value={selectItem.value}>
-                {selectItem.label}
+            {selectItems.map(({ id, value, label }) => (
+              <option key={id} value={value}>
+                {label}
               </option>
             ))}
           </select>
@@ -251,7 +262,7 @@ const Form = () => {
                 className="slider"
                 data-label-on="YES"
                 data-label-off="NO"
-                onClick={!isEqual ? () => setIsEqual(true) : () => setIsEqual(false)}
+                onClick={() => setIsEqual(!isEqual ? true : false)}
               ></span>
             </label>
           </div>

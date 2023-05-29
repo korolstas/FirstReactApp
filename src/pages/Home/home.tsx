@@ -4,12 +4,12 @@ import { PERSONS_DATA } from './Modal/constants';
 import './home.css';
 
 type TPerson = {
-  name: string;
-  gender: string;
-  status: string;
-  location: string;
-  img: string;
-  species: string;
+  name: string | undefined;
+  gender: string | undefined;
+  status: string | undefined;
+  location: string | undefined;
+  img: string | undefined;
+  species: string | undefined;
 };
 
 const Home = () => {
@@ -17,12 +17,12 @@ const Home = () => {
   const [isVisibility, setIsVisibility] = useState(false);
   const [searchInfo, setSearchInfo] = useState('');
   const [person, setPerson] = useState<TPerson>({
-    name: 'none',
-    gender: 'none',
-    species: 'none',
-    status: 'none',
-    location: 'none',
-    img: 'none',
+    name: undefined,
+    gender: undefined,
+    species: undefined,
+    status: undefined,
+    location: undefined,
+    img: undefined,
   });
 
   const openModal = (personInfo: TPerson) => {
@@ -71,7 +71,7 @@ const Home = () => {
       </div>
       <div className="modals">
         {filteredPersons.map((hero) => (
-          <div key={hero.name}>{modalBox(hero)}</div>
+          <div key={hero.id}>{modalBox(hero)}</div>
         ))}
       </div>
     </div>

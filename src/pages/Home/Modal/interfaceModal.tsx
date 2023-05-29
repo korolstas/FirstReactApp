@@ -1,12 +1,12 @@
 interface Props {
   setActive: () => void;
   hero: {
-    name: string;
-    gender: string;
-    status: string;
-    location: string;
-    img: string;
-    species: string;
+    name: string | undefined;
+    gender: string | undefined;
+    status: string | undefined;
+    location: string | undefined;
+    img: string | undefined;
+    species: string | undefined;
   };
 }
 
