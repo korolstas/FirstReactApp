@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from './Modal/Modal';
 import './home.css';
 import Loader from './Loader/Loader';
+import localforage from 'localforage';
 
 type TPerson = {
   id: number | undefined;
@@ -67,6 +68,15 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [isLoading]);
 
+  useEffect(() => {
+    // Восстановление значения из локального хранилища при загрузке компонента
+    localforage.getItem<string>('searchInfo').then((value: string | null) => {
+      if (value) {
+        setSearchInfo(value);
+      }
+    });
+  }, []);
+
   const openModal = (personInfo: TPerson) => {
     setIsVisibility(!isVisibility);
     setPerson({
@@ -92,6 +102,7 @@ const Home = () => {
       const filteredHero = personUpdater.filter((hero: TPerson) =>
         hero.name.toLowerCase().includes(searchInfo.toLowerCase())
       );
+      localforage.setItem('searchInfo', searchInfo);
       setIsLoading(true);
       setFilteredPersons(filteredHero);
     }
