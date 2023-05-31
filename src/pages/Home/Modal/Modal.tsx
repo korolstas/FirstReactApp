@@ -18,7 +18,7 @@ const Modal: React.FC<Props> = ({ setActive, hero }) => {
     },
     {
       label: 'Location: ',
-      value: hero.location,
+      value: hero.location.name,
     },
   ];
 
@@ -30,7 +30,7 @@ const Modal: React.FC<Props> = ({ setActive, hero }) => {
         </button>
         <p className="name-modal">{hero.name}</p>
         <div className="box-info">
-          <img src={hero.img} alt="" />
+          <img src={hero.image} alt="" />
           <div className="info-modal">
             {modalsInfo.map((modalInfo) => (
               <p key={modalInfo.label}>

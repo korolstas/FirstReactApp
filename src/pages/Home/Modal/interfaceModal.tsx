@@ -4,8 +4,10 @@ interface Props {
     name: string | undefined;
     gender: string | undefined;
     status: string | undefined;
-    location: string | undefined;
-    img: string | undefined;
+    location: {
+      name: string | undefined;
+    };
+    image: string | undefined;
     species: string | undefined;
   };
 }

@@ -21,7 +21,7 @@
   display: flex;
   flex-flow: row wrap;
   width: 95vw;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .card {
   text-align: center;
@@ -53,4 +53,8 @@
 .open.animaited {
   opacity: 1;
   visibility: visible;
+}
+.nothing {
+  display: flex;
+  /* justify-content: center; */
 }

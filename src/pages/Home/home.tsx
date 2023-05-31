@@ -1,56 +1,99 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './Modal/Modal';
-import { PERSONS_DATA } from './Modal/constants';
 import './home.css';
+import Loader from './Loader/Loader';
 
 type TPerson = {
-  name: string | undefined;
+  id: number | undefined;
+  name: string;
   gender: string | undefined;
   status: string | undefined;
-  location: string | undefined;
-  img: string | undefined;
+  location: {
+    name: string | undefined;
+  };
+  image: string | undefined;
   species: string | undefined;
 };
 
 const Home = () => {
-  const [filteredPersons, setFilteredPersons] = useState(PERSONS_DATA);
   const [isVisibility, setIsVisibility] = useState(false);
   const [searchInfo, setSearchInfo] = useState('');
   const [person, setPerson] = useState<TPerson>({
-    name: undefined,
+    id: undefined,
+    name: '',
     gender: undefined,
     species: undefined,
     status: undefined,
-    location: undefined,
-    img: undefined,
+    location: {
+      name: undefined,
+    },
+    image: undefined,
   });
+  const [personUpdater, setPersonUpdate] = useState<TPerson[]>([]);
+  const [filteredPersons, setFilteredPersons] = useState<TPerson[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Выполните асинхронный запрос для получения данных
+        const response = await fetch('https://rickandmortyapi.com/api/character');
+        const jsonData = await response.json();
+        const extractedCharacters = jsonData.results.map((personUpdate: TPerson) => ({
+          id: personUpdate.id,
+          name: personUpdate.name,
+          gender: personUpdate.gender,
+          species: personUpdate.species,
+          status: personUpdate.status,
+          location: {
+            name: personUpdate.location.name,
+          },
+          image: personUpdate.image,
+        }));
+        setPersonUpdate(extractedCharacters);
+        setFilteredPersons(extractedCharacters);
+      } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   const openModal = (personInfo: TPerson) => {
     setIsVisibility(!isVisibility);
     setPerson({
+      id: personInfo.id,
       name: personInfo.name,
       gender: personInfo.gender,
       species: personInfo.species,
       status: personInfo.status,
       location: personInfo.location,
-      img: personInfo.img,
+      image: personInfo.image,
     });
   };
   const modalBox = (personInfo: TPerson) => (
     <div onClick={() => openModal(personInfo)} className="card">
       <h3>{personInfo.name}</h3>
       <div className="personImg">
-        <img className="img" src={personInfo.img} alt="" />
+        <img className="img" src={personInfo.image} alt="" />
       </div>
     </div>
   );
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setFilteredPersons(
-        PERSONS_DATA.filter((personInfo) =>
-          personInfo.name.toLowerCase().includes(searchInfo.toLowerCase())
-        )
+      const filteredHero = personUpdater.filter((hero: TPerson) =>
+        hero.name.toLowerCase().includes(searchInfo.toLowerCase())
       );
+      setIsLoading(true);
+      setFilteredPersons(filteredHero);
     }
   };
 
@@ -70,9 +113,13 @@ const Home = () => {
         <Modal setActive={() => openModal(person)} hero={person} />
       </div>
       <div className="modals">
-        {filteredPersons.map((hero) => (
-          <div key={hero.id}>{modalBox(hero)}</div>
-        ))}
+        {isLoading ? (
+          <Loader />
+        ) : filteredPersons.length !== 0 ? (
+          filteredPersons.map((hero) => <div key={hero.id}>{modalBox(hero)}</div>)
+        ) : (
+          <h3 className="nothing">NOTHING</h3>
+        )}
       </div>
     </div>
   );
