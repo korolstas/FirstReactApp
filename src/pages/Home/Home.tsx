@@ -73,9 +73,13 @@ const Home = () => {
     localforage.getItem<string>('searchInfo').then((value: string | null) => {
       if (value) {
         setSearchInfo(value);
+        const filteredHero = personUpdater.filter((hero: TPerson) =>
+          hero.name.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredPersons(filteredHero);
       }
     });
-  }, []);
+  }, [personUpdater]);
 
   const openModal = (personInfo: TPerson) => {
     setIsVisibility(!isVisibility);
