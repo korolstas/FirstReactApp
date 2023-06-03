@@ -1,0 +1,184 @@
+.container {
+  text-align: center;
+}
+form {
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  text-align: left;
+  border: 2px solid rgb(2, 118, 139);
+  border-radius: 10px;
+}
+label {
+  cursor: default;
+}
+.form-empty {
+  height: 22px;
+  color: red;
+}
+.form-name {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0px;
+  background: rgba(0, 217, 255, 0.3);
+  border: 2px solid rgb(2, 118, 139);
+  border-radius: 3px;
+}
+.form-date {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0px;
+  background: rgba(0, 217, 255, 0.3);
+  border: 2px solid rgb(2, 118, 139);
+  color: rgb(2, 118, 139);
+  border-radius: 3px;
+}
+.form-select {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0px;
+  background: rgba(0, 217, 255, 0.3);
+  border: 2px solid rgb(2, 118, 139);
+  color: rgb(2, 118, 139);
+  border-radius: 3px;
+}
+.form-img {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0px;
+  background: rgba(0, 217, 255, 0.3);
+  border: 2px solid rgb(2, 118, 139);
+  color: rgb(2, 118, 139);
+  border-radius: 3px;
+}
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.check-switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 28px;
+}
+.check-switch:hover {
+  box-shadow: 1px;
+}
+.check-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  border-radius: 5px;
+  border: 1px solid rgb(2, 118, 139);
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* box-shadow: 0 1px 1px rgb(2, 118, 139); */
+  background-color: rgb(201, 200, 200);
+  transition: 0.5s;
+}
+.slider::before {
+  content: attr(data-label-on);
+  display: inline-block;
+  box-sizing: border-box;
+  width: 45px;
+  bottom: 0;
+  left: 0;
+  border-radius: 4px;
+  position: absolute;
+  text-transform: uppercase;
+  text-align: center;
+  background: rgb(2, 118, 139);
+  line-height: 26px;
+  font-size: 10px;
+  color: rgba(5, 217, 255, 0.5);
+  transition: 0.5s;
+}
+.slider::after {
+  display: inline-block;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 26px;
+  font-size: 10px;
+  color: rgb(2, 118, 139);
+}
+input[type='checkbox']:not(:checked) + .slider:before {
+  content: attr(data-label-off);
+}
+input[type='checkbox']:hover + .slider:before {
+  color: rgba(5, 217, 255, 1);
+}
+input:checked + .slider {
+  background-color: rgba(5, 217, 255, 0.4);
+}
+input:checked + .slider::before {
+  transform: translateX(44px);
+}
+
+.sub-btn {
+  font-size: 20px;
+  color: rgb(2, 118, 139);
+  display: flex;
+  margin-left: 350px;
+  justify-content: center;
+  align-content: space-around;
+  align-items: center;
+  background: rgba(0, 217, 255, 0.3);
+  border-radius: 3px;
+  border: 2px solid rgb(2, 118, 139);
+  height: 40px;
+  width: 150px;
+  opacity: 0.5;
+}
+.sub-btn.animaited {
+  opacity: 1;
+  cursor: pointer;
+}
+.sub-btn.animaited:hover {
+  box-shadow: 0 1px 1px rgb(2, 118, 139);
+}
+.modalsS {
+  display: flex;
+  max-width: 1600px;
+  margin: 0px auto;
+}
+.modali {
+  display: flex;
+  column-gap: 25px;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+.modal-window {
+  position: fixed;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+}
+.window {
+  background-color: green;
+  height: 6%;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 5px;
+  color: aliceblue;
+}

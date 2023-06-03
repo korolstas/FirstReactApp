@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './pages/Home/Home';
-import Form from './pages/Form/Form';
+import Form from './pages/Form/FormUpdate';
 import About from './pages/About/About';
 import Error from './pages/Error404/Error404';
 import { Route, Routes, Navigate } from 'react-router-dom';
