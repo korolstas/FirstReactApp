@@ -28,7 +28,7 @@ const Card = (person: TPerson) => {
       </div>
       <div className="card_novetiels">
         <label>Info about novelties</label>
-        <label className="">{!person.info ? 'Yes' : 'No'}</label>
+        <label className="">{person.info ? 'Yes' : 'No'}</label>
       </div>
     </div>
   );
